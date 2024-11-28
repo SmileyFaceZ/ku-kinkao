@@ -5,9 +5,15 @@ import ku.kinkao.repository.MemberRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
+import ku.kinkao.dto.SignupRequest;
+import java.time.Instant;
 
 @Service
 public class SignupService {
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     private MemberRepository repository;
@@ -19,17 +25,15 @@ public class SignupService {
         return repository.findByUsername(username) == null;
     }
 
-    public void createMember(Member member) {
-        Member newMember = new Member();
-        newMember.setFirstName(member.getFirstName());
-        newMember.setLastName(member.getLastName());
-        newMember.setUsername(member.getUsername());
+    public void createMember(SignupRequest dto) {
+        Member dao = modelMapper.map(dto, Member.class);
+        dao.setCreatedAt(Instant.now());
 
-        String hashedPassword = passwordEncoder.encode(member.getPassword());
+        String hashedPassword = passwordEncoder.encode(dto.getPassword());
 
-        newMember.setPassword(hashedPassword);
+        dao.setPassword(hashedPassword);
 
-        repository.save(newMember);
+        repository.save(dao);
     }
 
     public Member getMember(String username) {

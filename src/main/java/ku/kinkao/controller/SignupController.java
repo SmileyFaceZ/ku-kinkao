@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import ku.kinkao.dto.SignupRequest;
 
 
 @Controller
@@ -26,7 +27,7 @@ public class SignupController {
 
 
     @PostMapping("/signup")
-    public String signupMember(@ModelAttribute Member member, Model model) {
+    public String signupMember(@ModelAttribute SignupRequest member, Model model) {
 
 
         if (signupService.isUsernameAvailable(member.getUsername())) {
