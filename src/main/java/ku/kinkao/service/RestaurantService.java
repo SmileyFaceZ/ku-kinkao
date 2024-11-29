@@ -33,6 +33,7 @@ public class RestaurantService {
 
 
     public Restaurant getOneRestaurant(UUID id) {
+        System.out.println("id: " + id);
         if (repository.findById(id).isPresent())
             return repository.findById(id).get();
         throw new NoSuchElementException("No restaurant with specified id");

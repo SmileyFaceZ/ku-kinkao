@@ -18,7 +18,7 @@ import java.util.UUID;
 
 
 @Controller
-@RequestMapping("/review")
+@RequestMapping("/reviews")
 public class ReviewController {
 
 
@@ -68,7 +68,7 @@ public class ReviewController {
 
 
         reviewService.createReview(review);
-        return "redirect:/review/show/" + review.getRestaurantId();
+        return "redirect:/reviews/show/" + review.getRestaurantId();
     }
 }
 
