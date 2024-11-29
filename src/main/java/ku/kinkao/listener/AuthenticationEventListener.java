@@ -30,17 +30,16 @@ public class AuthenticationEventListener {
     @EventListener
     public void onSuccess(AuthenticationSuccessEvent event) {
         User user = (User) event.getAuthentication().getPrincipal();
-        logger.info(user.getUsername() + " has successfully logged in at "
-                + Instant.now());
+        // logs for access control (authorization), log the roles of the person who is signing in.
+        logger.info("User '{}' successfully logged in at {}", user.getUsername(), Instant.now());
+        logger.info("Access Control Decision: User '{}' has roles {}", user.getUsername(), user.getAuthorities());
     }
 
 
     @EventListener
     public void onFailure(AuthenticationFailureBadCredentialsEvent event) {
-
-
         String username = (String) event.getAuthentication().getPrincipal();
-
+        logger.warn("Failed login attempt for username: '{}' at {}", username, Instant.now());
 
         if (signupService.isUsernameAvailable(username))
             logger.warn("Failed login attempt [incorrect USERNAME]");
