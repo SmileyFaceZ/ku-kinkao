@@ -39,6 +39,15 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/signup")).permitAll()
+                        .requestMatchers(
+                                new AntPathRequestMatcher("/restaurants")).permitAll()
+                        .requestMatchers(
+                                new AntPathRequestMatcher("/reviews/show/**")).permitAll()
+                        .requestMatchers(
+                                new AntPathRequestMatcher("/reviews/add/**"))
+                        .hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(
+                                new AntPathRequestMatcher("/restaurants/add")).hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
