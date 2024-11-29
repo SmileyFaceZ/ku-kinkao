@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">>
 <head>
     <meta charset="UTF-8">
     <title>Review</title>
@@ -17,7 +17,7 @@
 
 
     <br>
-    <p>
+    <p sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
         <a class="btn btn-primary" th:href="@{/reviews/add/{id}(id=${restaurant.id})}">Add Review</a>
     </p>
 
